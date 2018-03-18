@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form id="mainForm">
+    <span id="nameSpan">
+        Name: <input id="name" type="text" onblur="validationName()" value="">
+    </span>
+    <br>
+    <span id="numberSpan">
+    Full age: <input id="age" type="number" onblur="validationNumber()" value="">
+    </span>
+
+    <span id="dateSpan">
+    <br>Date of completion: <input id="date" type="date" value="">
+    </span>
+
+    <span id="checkSpan">
+    <br>Do you agree the processing of personal data? <input id="yes" type="checkbox" checked="checked"> Yes
+    </span>
+
+    <input id="but" type="button" onclick="myFunction()" value="send">
+    <p id="outputString" datatype="text"></p>
+    <p id="outputNumber" datatype="text"></p>
+    <p id="outputDate" datatype="text"></p>
+    <p id="outputBool" datatype="text"></p>
+</form>
+<script>
+    function validationName() {
+        var re = new RegExp("^[A-Z]+[a-z]{0,10}$");
+        var text = document.getElementById("name").value;
+        var st = 'Correct';
+        if (re.test(text) == false) {
+            st='No correct';
+        }
+
+        var childElementCount = document.getElementById("nameSpan").childElementCount;
+
+        if (childElementCount > 1) {
+            document.getElementById("nameSpan").lastChild.innerHTML =st;
+        }
+        else {
+            var element = document.createElement('span');
+            element.innerHTML = st;
+            document.getElementById("nameSpan").appendChild(element);
+            }
+
+    }
+
+    function validationNumber() {
+        var re = new RegExp("^(?:100|[1-9]\\d|[6-9])$");
+        var text = document.getElementById("age").value;
+        var num = 'Correct';
+        if (re.test(text) == false) {
+            num='No correct';
+        }
+
+        var childElementCount = document.getElementById("numberSpan").childElementCount;
+
+        if (childElementCount > 1) {
+            document.getElementById("numberSpan").lastChild.innerHTML =num;
+        }
+        else {
+            var element = document.createElement('span');
+            element.innerHTML = num;
+            document.getElementById("numberSpan").appendChild(element);
+        }
+
+
+    }
+    function myFunction() {
+        var n = document.getElementById("name").value;
+        document.getElementById("outputString").innerHTML = n;
+        var a = document.getElementById("age").value;
+        document.getElementById("outputNumber").innerHTML = a;
+        var d = document.getElementById("date").value;
+        document.getElementById("outputDate").innerHTML = d;
+        var y = Boolean(document.getElementById("yes").checked);
+        document.getElementById("outputBool").innerHTML = y;
+        var json = {"Name": n, "Full age": a, "Date of completion": d, "Agreement": y};
+        document.getElementById("demo").innerHTML = JSON.stringify(json);
+    }
+</script>
+<reachtext id="demo"></reachtext>
+</body>
+
